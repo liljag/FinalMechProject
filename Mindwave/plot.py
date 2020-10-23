@@ -7,6 +7,7 @@ from MindwaveDataPoints import EEGPowersDataPoint
 from MindwaveDataPointReader import MindwaveDataPointReader
 from datetime import datetime
 import numpy as np
+import csv
 
 
 #def animate(time,dataPoint):
@@ -30,6 +31,9 @@ import numpy as np
 if __name__ == '__main__':
     mindwaveDataPointReader = MindwaveDataPointReader()
     mindwaveDataPointReader.start()
+    file = open("out.csv", "w")
+    cr = csv.writer(file, delimiter=";", lineterminator="\n")
+    cr.writerow(["highAlpha", "lowAlpha", "highBeta", "lowBeta", "midGamma", "lowGamma", "delta", "theta"])
     style.use('fivethirtyeight')
     dataA1 = []
     dataA2 = []
@@ -99,6 +103,7 @@ if __name__ == '__main__':
             dataG2.append(dataPoint.lowGamma)
             dataD.append(dataPoint.delta)
             dataT.append(dataPoint.theta)
+            cr.writerow([dataPoint.highAlpha, dataPoint.lowAlpha, dataPoint.highBeta, dataPoint.lowBeta, dataPoint.midGamma, dataPoint.lowGamma, dataPoint.delta, dataPoint.theta])
             #now = datetime.now()
             #tim.append(int(now.second))
             tim.append(count)
