@@ -15,3 +15,4 @@ if __name__ == '__main__':
         if (not dataPoint.__class__ is RawDataPoint):
             print( dataPoint)
 
+
