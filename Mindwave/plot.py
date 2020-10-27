@@ -54,7 +54,7 @@ def set_speed(data):
     # print(data)
 
     # if state == 1:
-    if data < 50000:
+    if data < 100000:
 
         #State 1 Fastest state
         servo1.ChangeDutyCycle(4)   #Right Wheel
@@ -76,11 +76,19 @@ def set_speed(data):
     #     servo2.ChangeDutyCycle(9.5)  #Left wheel
         # time.sleep(10)
     
-    elif data >= 50000:
+    elif data >= 100000:
         servo1.ChangeDutyCycle(7)   #Right Wheel
         servo2.ChangeDutyCycle(7)  #Left wheel
         print("OVER OVER OVER OVER OVER \N OVER OVER OVER OVER")
+        time.sleep(3)
+        servo1.ChangeDutyCycle(5)   #Right Wheel
+        servo2.ChangeDutyCycle(9.5)  #Left wheel
         time.sleep(2)
+        servo1.ChangeDutyCycle(4.5)   #Right Wheel
+        servo2.ChangeDutyCycle(10)  #Left wheel
+        time.sleep(2)
+     
+
         
     # state += 1
 
