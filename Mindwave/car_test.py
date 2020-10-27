@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 import time
+from plot import plotting
+
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11,GPIO.OUT)
 servo1 = GPIO.PWM(11,50)
@@ -8,8 +10,8 @@ GPIO.setup(38,GPIO.OUT)
 servo2 = GPIO.PWM(38,50)
 servo1.start(0) #Right Wheel
 servo2.start(0) #Left wheel
-print("Wait for 1 second")
-time.sleep(1)
+# print("Wait for 1 second")
+# time.sleep(1)
 
 ## The speeds 
 
@@ -35,28 +37,32 @@ state = 1
 
 while True:
 
-    if state == 1:
+    data = plotting()
+    print(data)
+
+    # if state == 1:
+    if data < 150000:
 
         #State 1 Fastest state
         servo1.ChangeDutyCycle(4)   #Right Wheel
         servo2.ChangeDutyCycle(13)  #Left wheel
         # time.sleep(10)
     
-    elif state == 2:
-        # State 2 2nd fastest    
+    # elif state == 2:
+    #     # State 2 2nd fastest    
 
-        servo1.ChangeDutyCycle(4.5)   #Right Wheel
-        servo2.ChangeDutyCycle(10)  #Left wheel
+    #     servo1.ChangeDutyCycle(4.5)   #Right Wheel
+    #     servo2.ChangeDutyCycle(10)  #Left wheel
         # time.sleep(10)
 
-    elif state == 3:
-        # State 3
+    # elif state == 3:
+    #     # State 3
 
-        servo1.ChangeDutyCycle(5)   #Right Wheel
-        servo2.ChangeDutyCycle(9.5)  #Left wheel
+    #     servo1.ChangeDutyCycle(5)   #Right Wheel
+    #     servo2.ChangeDutyCycle(9.5)  #Left wheel
         # time.sleep(10)
     
-    elif state == 4:
+    elif data >= 150000:
         servo1.ChangeDutyCycle(7)   #Right Wheel
         servo2.ChangeDutyCycle(7)  #Left wheel
         # time.sleep(10)

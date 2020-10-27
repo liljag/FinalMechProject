@@ -8,6 +8,89 @@ from MindwaveDataPointReader import MindwaveDataPointReader
 from datetime import datetime
 import numpy as np
 import csv
+import RPi.GPIO as GPIO
+
+
+
+
+## The car 
+## Car settings
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11,GPIO.OUT)
+servo1 = GPIO.PWM(11,50)
+
+GPIO.setup(38,GPIO.OUT)
+servo2 = GPIO.PWM(38,50)
+servo1.start(0) #Right Wheel
+servo2.start(0) #Left wheel
+# print("Wait for 1 second")
+# time.sleep(1)
+
+## The speeds 
+
+## 4 and 10 are similar
+## 9 and 5 are similar
+## 7 is stop
+## 3 and 12 are max 
+
+
+
+# duty = 3
+
+
+#three different speeds
+# while duty <= 11:
+#     print(duty)
+#     servo2.ChangeDutyCycle(duty)
+#     servo1.ChangeDutyCycle(14-duty)
+#     time.sleep(
+# )
+#     duty += 1
+state = 1
+
+def set_speed(data):
+
+    
+    # print(data)
+
+    # if state == 1:
+    if data < 50000:
+
+        #State 1 Fastest state
+        servo1.ChangeDutyCycle(4)   #Right Wheel
+        servo2.ChangeDutyCycle(13)  #Left wheel
+        print("Under")
+        # time.sleep(10)
+    
+    # elif state == 2:
+    #     # State 2 2nd fastest    
+
+    #     servo1.ChangeDutyCycle(4.5)   #Right Wheel
+    #     servo2.ChangeDutyCycle(10)  #Left wheel
+        # time.sleep(10)
+
+    # elif state == 3:
+    #     # State 3
+
+    #     servo1.ChangeDutyCycle(5)   #Right Wheel
+    #     servo2.ChangeDutyCycle(9.5)  #Left wheel
+        # time.sleep(10)
+    
+    elif data >= 50000:
+        servo1.ChangeDutyCycle(7)   #Right Wheel
+        servo2.ChangeDutyCycle(7)  #Left wheel
+        print("OVER OVER OVER OVER OVER \N OVER OVER OVER OVER")
+        time.sleep(2)
+        
+    # state += 1
+
+
+
+
+
+## The plot
+
+
 
 
 #def animate(time,dataPoint):
@@ -28,7 +111,8 @@ import csv
     #print("sup")
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
+def plotting():
     mindwaveDataPointReader = MindwaveDataPointReader()
     mindwaveDataPointReader.start()
     file = open("out.csv", "w")
@@ -104,12 +188,13 @@ if __name__ == '__main__':
     
 
     while(count < 100):
+
         dataPoint = mindwaveDataPointReader.readNextDataPoint()
         if ( dataPoint.__class__ is EEGPowersDataPoint):
-            print(dataPoint.highAlpha)
-            print(type(dataPoint.highAlpha))
+            # print(dataPoint.highAlpha)
+            # print(type(dataPoint.highAlpha))
             #ani = animation.FuncAnimation(fig, animate(now, dataPoint.highAlpha), interval=1000)
-            print("sfhsdk")
+            # print("sfhsdk")
             dataA1.append(dataPoint.highAlpha)
             dataA2.append(dataPoint.lowAlpha)
             dataB1.append(dataPoint.highBeta)
@@ -127,51 +212,55 @@ if __name__ == '__main__':
             print("Count: ", count)
             #print("skjdhfksh")
             #print(int(now.second))
+            set_speed(dataPoint.highBeta)
             count += 1
-            print(dataPoint)
-            #time.sleep(3)
-    print("sdkjfhsdkfhishfisdflkhaewklfh")
-    #print(data)
-    print(tim)
-    y = np.array(dataA1)
-    x = np.array(tim)
-    ax1.plot(x, y)
-    #plt.show()
-    y = np.array(dataA2)
-    x = np.array(tim)
-    ax2.plot(x, y)
-    #plt.show()
-    y = np.array(dataB1)
-    x = np.array(tim)
-    bx1.plot(x, y)
-    #plt.show()
-    y = np.array(dataB2)
-    x = np.array(tim)
-    bx2.plot(x, y)
-    #plt.show()
-    y = np.array(dataG1)
-    x = np.array(tim)
-    gx1.plot(x, y)
-    #plt.show()
-    y = np.array(dataG2)
-    x = np.array(tim)
-    gx2.plot(x, y)
-    #plt.show()
-    y = np.array(dataD)
-    x = np.array(tim)
-    d.plot(x, y)
-    #plt.show()
-    y = np.array(dataT)
-    x = np.array(tim)
-    t.plot(x, y)
-    #
-    y = np.array(data_sum)
-    x = np.array(tim)
-    tb.plot(x, y)
-    #
-    y = np.array(data_sum2)
-    x = np.array(tim)
-    tb2.plot(x, y)
-    plt.show()
+            print(dataPoint.highBeta)
+            # return dataPoint.highBeta
+        #time.sleep(3)
+    # print("sdkjfhsdkfhishfisdflkhaewklfh")
+    # #print(data)
+    # print(tim)
+    # y = np.array(dataA1)
+    # x = np.array(tim)
+    # ax1.plot(x, y)
+    # #plt.show()
+    # y = np.array(dataA2)
+    # x = np.array(tim)
+    # ax2.plot(x, y)
+    # #plt.show()
+    # y = np.array(dataB1)
+    # x = np.array(tim)
+    # bx1.plot(x, y)
+    # #plt.show()
+    # y = np.array(dataB2)
+    # x = np.array(tim)
+    # bx2.plot(x, y)
+    # #plt.show()
+    # y = np.array(dataG1)
+    # x = np.array(tim)
+    # gx1.plot(x, y)
+    # #plt.show()
+    # y = np.array(dataG2)
+    # x = np.array(tim)
+    # gx2.plot(x, y)
+    # #plt.show()
+    # y = np.array(dataD)
+    # x = np.array(tim)
+    # d.plot(x, y)
+    # #plt.show()
+    # y = np.array(dataT)
+    # x = np.array(tim)
+    # t.plot(x, y)
+    # #
+    # y = np.array(data_sum)
+    # x = np.array(tim)
+    # tb.plot(x, y)
+    # #
+    # y = np.array(data_sum2)
+    # x = np.array(tim)
+    # tb2.plot(x, y)
+    # plt.show()
         #    print("lkfjgd")
         #    print(dataPoint)
+
+plotting()
