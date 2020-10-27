@@ -43,8 +43,12 @@ if __name__ == '__main__':
     dataG2 = []
     dataD = []
     dataT = []
+    data_sum = []
+    data_sum2 = []
     #tim = [1,2, 3, 4, 5, 6,7, 8, 9, 10]
     tim = []
+
+    
 
     #now = datetime.now()
     #current_time = now.strftime("%H:%M:%S")
@@ -82,11 +86,22 @@ if __name__ == '__main__':
     tf = plt.figure()
     t = tf.gca()
     t.set_title("Theta")
-    fig.legend((ax1, ax2, bx1, bx2, gx1, gx2, d, t),("highA", "lowA", "highB", "lowB", "highG", "lowG", "delta", "theta"))
+
+    tbf = plt.figure()
+    tb = tbf.gca()
+    tb.set_title("Delta Beta average")
+
+    tbf2 = plt.figure()
+    tb2 = tbf2.gca()
+    tb2.set_title("theta Beta ave")
+
+    #fig.legend((ax1, ax2, bx1, bx2, gx1, gx2, d, t),("highA", "lowA", "highB", "lowB", "highG", "lowG", "delta", "theta"))
     #ax1.xaxis_date()
 
 
     count = 0
+
+    
 
     while(count < 100):
         dataPoint = mindwaveDataPointReader.readNextDataPoint()
@@ -103,6 +118,8 @@ if __name__ == '__main__':
             dataG2.append(dataPoint.lowGamma)
             dataD.append(dataPoint.delta)
             dataT.append(dataPoint.theta)
+            data_sum.append(int((dataPoint.lowBeta + dataPoint.delta)/2))
+            data_sum2.append(int((dataPoint.lowBeta + dataPoint.theta)/2))
             cr.writerow([dataPoint.highAlpha, dataPoint.lowAlpha, dataPoint.highBeta, dataPoint.lowBeta, dataPoint.midGamma, dataPoint.lowGamma, dataPoint.delta, dataPoint.theta])
             #now = datetime.now()
             #tim.append(int(now.second))
@@ -147,6 +164,14 @@ if __name__ == '__main__':
     y = np.array(dataT)
     x = np.array(tim)
     t.plot(x, y)
+    #
+    y = np.array(data_sum)
+    x = np.array(tim)
+    tb.plot(x, y)
+    #
+    y = np.array(data_sum2)
+    x = np.array(tim)
+    tb2.plot(x, y)
     plt.show()
         #    print("lkfjgd")
         #    print(dataPoint)

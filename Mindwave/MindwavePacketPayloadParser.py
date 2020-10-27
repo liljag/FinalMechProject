@@ -20,7 +20,7 @@ class MindwavePacketPayloadParser:
         return self._payloadIndex == len(self._payloadBytes)
     
     def _parseOneDataPoint(self):
-        dataRowCode = self._extractDataRowCode(),
+        dataRowCode = self._extractDataRowCode();
         dataRowValueBytes = self._extractDataRowValueBytes(dataRowCode)
         return self._createDataPoint(dataRowCode, dataRowValueBytes)
     

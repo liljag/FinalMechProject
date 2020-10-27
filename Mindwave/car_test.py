@@ -33,30 +33,35 @@ time.sleep(1)
 #     duty += 1
 state = 1
 
-while state <= 3:
+while True:
 
     if state == 1:
 
         #State 1 Fastest state
         servo1.ChangeDutyCycle(4)   #Right Wheel
         servo2.ChangeDutyCycle(13)  #Left wheel
-        time.sleep(10)
+        # time.sleep(10)
     
     elif state == 2:
         # State 2 2nd fastest    
 
         servo1.ChangeDutyCycle(4.5)   #Right Wheel
         servo2.ChangeDutyCycle(10)  #Left wheel
-        time.sleep(10)
+        # time.sleep(10)
 
     elif state == 3:
         # State 3
 
         servo1.ChangeDutyCycle(5)   #Right Wheel
         servo2.ChangeDutyCycle(9.5)  #Left wheel
-        time.sleep(10)
+        # time.sleep(10)
+    
+    elif state == 4:
+        servo1.ChangeDutyCycle(7)   #Right Wheel
+        servo2.ChangeDutyCycle(7)  #Left wheel
+        # time.sleep(10)
         
-    state += 1
+    # state += 1
 
 # Changes to 180 degrees in 10 steps
 servo1.ChangeDutyCycle(0)
